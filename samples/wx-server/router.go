@@ -12,7 +12,7 @@ import (
 	"os"
 	"github.com/rosbit/go-wx-api"
 	"github.com/rosbit/go-wx-api/conf"
-	"github.com/rosbit/go-wx-apps/samples/wx-server/utils"
+	"wx-server/utils"
 )
 
 func _registerMessageHandlers() {

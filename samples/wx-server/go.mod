@@ -1,4 +1,4 @@
-module github.com/rosbit/go-wx-apps/samples/wx-server
+module wx-server
 
 require (
 	github.com/gernest/alien v0.1.0

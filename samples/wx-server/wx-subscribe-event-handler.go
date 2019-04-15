@@ -7,7 +7,7 @@ package main
 import (
 	"fmt"
 	"github.com/rosbit/go-wx-api/msg"
-	"github.com/rosbit/go-wx-apps/samples/wx-server/utils"
+	"wx-server/utils"
 )
 
 // 处理微信用户订阅服务号

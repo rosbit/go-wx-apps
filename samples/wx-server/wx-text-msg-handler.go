@@ -7,7 +7,7 @@ package main
 import (
 	"fmt"
 	"github.com/rosbit/go-wx-api/msg"
-	"github.com/rosbit/go-wx-apps/samples/wx-server/utils"
+	"wx-server/utils"
 )
 
 // 处理微信用户在服务号中输入的文本消息。如果不处理，返回nil
