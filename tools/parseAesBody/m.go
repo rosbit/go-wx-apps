@@ -15,13 +15,9 @@ func main() {
 	}
 	token, appId, appSecret, aesKey, uri, xmlBody := os.Args[1], os.Args[2], os.Args[3], os.Args[4], os.Args[5], os.Args[6]
 
-	var err error
-	wxconf.WxParams = wxconf.WxParamsT{Token:token, AppId:appId, AppSecret:appSecret}
-	if aesKey != "" {
-		if err = wxconf.SetAesKey(aesKey); err != nil {
-			fmt.Printf("invallid wxAESKey: %v\n", err)
-			return
-		}
+	if err := wxconf.SetParams(token, appId, appSecret, aesKey); err != nil {
+		fmt.Printf("%v\n", err)
+		return
 	}
 
 	u, err := url.ParseRequestURI(uri)

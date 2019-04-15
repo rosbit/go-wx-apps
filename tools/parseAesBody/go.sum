@@ -1,12 +1,8 @@
 github.com/beevik/etree v1.1.0 h1:T0xke/WvNtMoCqgzPhkX2r4rjY3GDZFi+FjpRZY2Jbs=
 github.com/beevik/etree v1.1.0/go.mod h1:r8Aw8JqVegEf0w2fDnATrX9VpkMcyFeM0FhwO62wh+A=
-github.com/gernest/alien v0.1.0/go.mod h1:qtjw+zYKFIL3T2RPYS8TGpMx+ZPwUYFm+BPSd7F+AH0=
 github.com/olebedev/config v0.0.0-20180910155717-57f804269e64/go.mod h1:RL5+WRxWTAXqqCi9i+eZlHrUtO7AQujUqWi+xMohmc4=
 github.com/rosbit/go-wget v1.0.0/go.mod h1:8Tt92GKM/K9WI65yYkX0lwJDnRp64Vd082ojViWT6T4=
-github.com/rosbit/go-wx-api v0.0.0-20190414024854-4af8540831c2 h1:3+GBfRV/wZCrEzyMD6TVeU/UONf051pZI2WAZCIWv/Y=
-github.com/rosbit/go-wx-api v0.0.0-20190414024854-4af8540831c2/go.mod h1:CQsVoRpAVgeYQtEDZ0+jlMwMWBxBaUVSF67f0WgKbt0=
-github.com/rosbit/go-wx-api v0.0.1 h1:mZQOjXrSuet0P9bD+XCOowwaSdcX/YsHwzh7ANc3zQY=
-github.com/rosbit/go-wx-api v0.0.1/go.mod h1:rq1UB47gEl/2sLoWsuCxNR5/W5WUOOnjr+VetMg9Bi8=
-github.com/urfave/negroni v1.0.0/go.mod h1:Meg73S6kFm/4PpbYdq35yYWoCZ9mS/YSx+lKnmiohz4=
+github.com/rosbit/go-wx-api v0.0.2 h1:goOBA2cp11F2i5qzdLtNjwRT1IdvEBLnic0uIYv7SYY=
+github.com/rosbit/go-wx-api v0.0.2/go.mod h1:rq1UB47gEl/2sLoWsuCxNR5/W5WUOOnjr+VetMg9Bi8=
 gopkg.in/check.v1 v0.0.0-20161208181325-20d25e280405/go.mod h1:Co6ibVJAznAaIkqp8huTwlJQCZ016jof/cbN4VW5Yz0=
 gopkg.in/yaml.v2 v2.2.2/go.mod h1:hI93XBmqTisBFMUTm0b8Fm+jr3Dg1NNxqwp+5A1VGuI=
