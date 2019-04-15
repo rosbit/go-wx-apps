@@ -8,7 +8,7 @@ import (
 	"fmt"
 	"strings"
 	"encoding/json"
-	"github.com/rosbit/go-wx-api/samples/wx-server/utils"
+	"github.com/rosbit/go-wx-apps/samples/wx-server/utils"
 )
 
 var (

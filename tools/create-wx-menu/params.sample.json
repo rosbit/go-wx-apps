@@ -1,0 +1,5 @@
+{
+	"token":   "your_wx_service_token",
+	"AppId":   "appId_of_your_wx_service",
+	"Secret":  "appSecret_of_your_wx_service"
+}
