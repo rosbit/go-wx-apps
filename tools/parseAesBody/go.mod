@@ -1,3 +1,3 @@
 module parseAesBody
 
-require github.com/rosbit/go-wx-api v0.0.2
+require github.com/rosbit/go-wx-api v0.0.3

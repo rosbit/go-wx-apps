@@ -1,7 +1,7 @@
 SHELL=/bin/bash
 
 EXES = wx-echo-server wx-server
-TOOLS = wx-menu parseAesBody
+TOOLS = wx-menu parseAesBody wx-userinfo wx-qr
 
 all: .build .tools
 
