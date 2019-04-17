@@ -16,9 +16,8 @@ import (
 )
 
 func _registerMessageHandlers() {
-	wxapi.RegisterSubscribeEventHandler(subcribeUser)
+	wxapi.RegisterWxMsghandler(&WxServerMsgHandler{})
 	wxapi.RegisterRedictHandler(handleRedirect)
-	wxapi.RegisterTextMsgHandler(textMsgReceived)
 }
 
 func _inits() {

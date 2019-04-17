@@ -2,7 +2,7 @@
 
 该repository是[go-wx-api](https://github.com/rosbit/go-wx-api)的例程和工具，包括
  1. samples/wx-echo-server: 该程序可以直接用于配置微信公众号**服务器配置**，并可以对公众号对话框输入做回声应答
- 1. samples/wx-server: 一个可以处理菜单的公众号服务，用于微信相关操作和业务分离的场景
+ 1. samples/wx-proxy-server: 一个可以处理菜单的公众号服务，用于微信相关操作和业务分离的场景
  1. tools/wx-menu: 创建/查询/删除微信服务号自定义菜单
  1. tools/wx-userinfo: 通过openId查询用户信息
  1. tools/wx-qr: 生成某个sceneId的二维码链接

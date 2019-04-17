@@ -11,7 +11,7 @@ import (
 )
 
 // 处理微信用户订阅服务号
-func subcribeUser(subscribeEvent *wxmsg.SubscribeEvent) wxmsg.ReplyMsg {
+func (h *WxServerMsgHandler) HandleSubscribeEvent(subscribeEvent *wxmsg.SubscribeEvent) wxmsg.ReplyMsg {
 	showWelcome := func(msg string) wxmsg.ReplyMsg {
 		if msg != "" {
 			return wxmsg.NewReplyTextMsg(subscribeEvent.FromUserName, subscribeEvent.ToUserName, msg)

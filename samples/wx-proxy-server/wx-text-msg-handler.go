@@ -11,7 +11,7 @@ import (
 )
 
 // 处理微信用户在服务号中输入的文本消息。如果不处理，返回nil
-func textMsgReceived(textMsg *wxmsg.TextMsg) wxmsg.ReplyMsg {
+func (h *WxServerMsgHandler) HandleTextMsg(textMsg *wxmsg.TextMsg) wxmsg.ReplyMsg {
 	res, err := utils.JsonCall(realMsgTextUrl, "POST", textMsg)
 	if err != nil {
 		fmt.Printf("failed to JsonCall(%s): %v\n", realMsgTextUrl, err)
