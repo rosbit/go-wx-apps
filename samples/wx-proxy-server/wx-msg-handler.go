@@ -5,5 +5,5 @@ import (
 )
 
 type WxServerMsgHandler struct {
-	wxmsg.WxMsgHandler
+	wxmsg.WxMsgHandlerAdapter
 }
