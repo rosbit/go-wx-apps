@@ -6,6 +6,7 @@
  1. tools/wx-menu: 创建/查询/删除微信服务号自定义菜单
  1. tools/wx-userinfo: 通过openId查询用户信息
  1. tools/wx-qr: 生成某个sceneId的二维码链接
+ 1. tools/wx-shorturl: 把长url生成**https://w.url.cn/s** 打头的短链接
  1. tools/parseAesBody: 命令行模式下测试aes加密消息的分解
 
 ## 下载、编译方法
