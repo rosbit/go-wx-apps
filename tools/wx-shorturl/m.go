@@ -1,13 +1,15 @@
 package main
 
 import (
+	"github.com/rosbit/go-wx-api/v2/tools"
+	"github.com/rosbit/go-wx-api/v2"
 	"os"
 	"fmt"
 	"encoding/json"
-	"io/ioutil"
-	"github.com/rosbit/go-wx-api/conf"
-	"github.com/rosbit/go-wx-api/auth"
-	"github.com/rosbit/go-wx-api/tools"
+)
+
+const (
+	service = "test"
 )
 
 type ParamsT struct {
@@ -17,25 +19,22 @@ type ParamsT struct {
 	TokenCache string `json:"TokenCachePath"`
 }
 
-func loadConf(paramsFile string) (*ParamsT, string, error) {
-	paramsContent, err := ioutil.ReadFile(paramsFile)
+func loadConf(paramsFile string) (error) {
+	fp, err := os.Open(paramsFile)
 	if err != nil {
-		return nil, "", err
+		return err
 	}
+	defer fp.Close()
 
 	var params ParamsT
-	if err = json.Unmarshal(paramsContent, &params); err != nil {
-		return nil, "", err
+	if err = json.NewDecoder(fp).Decode(&params); err != nil {
+		return err
 	}
 
-	wxconf.SetParams(params.Token, params.AppId, params.Secret, "")
-	wxconf.TokenStorePath = params.TokenCache
+	wxapi.SetWxParams(service, params.Token, params.AppId, params.Secret, "")
+	wxapi.InitWx(params.TokenCache)
 
-	accessToken, err := wxauth.NewAccessToken().Get()
-	if err != nil {
-		return nil, "", err
-	}
-	return &params, accessToken, nil
+	return nil
 }
 
 func main() {
@@ -45,12 +44,11 @@ func main() {
 	}
 
 	paramsFile, longUrl := os.Args[1], os.Args[2]
-	_, accessToken, err := loadConf(paramsFile)
-	if err != nil {
+	if err := loadConf(paramsFile); err != nil {
 		fmt.Printf("%v\n", err)
 		return
 	}
-	shortUrl, err := wxtools.MakeShorturl(accessToken, longUrl)
+	shortUrl, err := wxtools.MakeShorturl(service, longUrl)
 	if err != nil {
 		fmt.Printf("%v\n", err)
 		return

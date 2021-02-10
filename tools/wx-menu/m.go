@@ -1,13 +1,15 @@
 package main
 
 import (
+	"github.com/rosbit/go-wx-api/v2/tools"
+	"github.com/rosbit/go-wx-api/v2"
 	"os"
 	"fmt"
 	"encoding/json"
-	"io/ioutil"
-	"github.com/rosbit/go-wx-api/conf"
-	"github.com/rosbit/go-wx-api/auth"
-	"github.com/rosbit/go-wx-api/tools"
+)
+
+const (
+	service = "test"
 )
 
 type ParamsT struct {
@@ -28,80 +30,72 @@ func usage() {
 }
 
 func createMenu(paramsFile string) {
-	params, accessToken, err := loadConf(paramsFile)
+	params, err := loadConf(paramsFile);
 	if err != nil {
 		fmt.Printf("failed to load conf: %v\n", err)
 		return
 	}
-	resp, err := wxtools.CreateMenu(accessToken, params.MenuJson)
-	if err != nil {
+	if err = wxtools.CreateMenu(service, params.MenuJson); err != nil {
 		fmt.Printf("failed to create menu: %v\n", err)
 		return
 	}
-	fmt.Printf("resp: %s\n", string(resp))
+	fmt.Printf("OK\n")
 }
 
 func queryMenu(paramsFile string) {
-	_, accessToken, err := loadConf(paramsFile)
-	if err != nil {
+	if _, err := loadConf(paramsFile); err != nil {
 		fmt.Printf("failed to load conf: %v\n", err)
 		return
 	}
-	resp, err := wxtools.QueryMenu(accessToken)
+	resp, err := wxtools.QueryMenu(service)
 	if err != nil {
 		fmt.Printf("failed to query menu: %v\n", err)
 		return
 	}
-	fmt.Printf("resp: %s\n", string(resp))
+	fmt.Printf("resp: %v\n", resp)
 }
 
 func deleteMenu(paramsFile string) {
-	_, accessToken, err := loadConf(paramsFile)
-	if err != nil {
+	if _, err := loadConf(paramsFile); err != nil {
 		fmt.Printf("failed to load conf: %v\n", err)
 		return
 	}
-	resp, err := wxtools.DeleteMenu(accessToken)
-	if err != nil {
+	if err := wxtools.DeleteMenu(service); err != nil {
 		fmt.Printf("failed to delete menu: %v\n", err)
 		return
 	}
-	fmt.Printf("resp: %s\n", string(resp))
+	fmt.Printf("OK\n")
 }
 
 func infoMenu(paramsFile string) {
-	_, accessToken, err := loadConf(paramsFile)
-	if err != nil {
+	if _, err := loadConf(paramsFile); err != nil {
 		fmt.Printf("failed to load conf: %v\n", err)
 		return
 	}
-	resp, err := wxtools.CurrentSelfmenuInfo(accessToken)
+	resp, err := wxtools.CurrentSelfmenuInfo(service)
 	if err != nil {
 		fmt.Printf("failed to get information of current self-menu: %v\n", err)
 		return
 	}
-	fmt.Printf("resp: %s\n", string(resp))
+	fmt.Printf("resp: %v\n", resp)
 }
 
-func loadConf(paramsFile string) (*ParamsT, string, error) {
-	paramsContent, err := ioutil.ReadFile(paramsFile)
+func loadConf(paramsFile string) (*ParamsT, error) {
+	fp, err := os.Open(paramsFile)
 	if err != nil {
-		return nil, "", err
+		return nil, err
 	}
+	defer fp.Close()
 
 	var params ParamsT
-	if err = json.Unmarshal(paramsContent, &params); err != nil {
-		return nil, "", err
+	if err = json.NewDecoder(fp).Decode(&params); err != nil {
+		return nil, err
 	}
 
-	wxconf.SetParams(params.Token, params.AppId, params.Secret, "")
-	wxconf.TokenStorePath = params.TokenCache
+	wxapi.SetWxParams(service, params.Token, params.AppId, params.Secret, "")
+	wxapi.InitWx(params.TokenCache)
 
-	accessToken, err := wxauth.NewAccessToken().Get()
-	if err != nil {
-		return nil, "", err
-	}
-	return &params, accessToken, nil
+	return &params, nil
 }
 
 var _commands = map[string]func(string) {

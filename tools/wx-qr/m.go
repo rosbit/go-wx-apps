@@ -1,14 +1,16 @@
 package main
 
 import (
+	"github.com/rosbit/go-wx-api/v2/tools"
+	"github.com/rosbit/go-wx-api/v2"
 	"os"
 	"fmt"
 	"encoding/json"
-	"io/ioutil"
 	"strconv"
-	"github.com/rosbit/go-wx-api/conf"
-	"github.com/rosbit/go-wx-api/auth"
-	"github.com/rosbit/go-wx-api/tools"
+)
+
+const (
+	service = "test"
 )
 
 type ParamsT struct {
@@ -27,41 +29,38 @@ func showResult(ticketURL2ShowQrCode, urlIncluedInQrcode string, err error) {
 	fmt.Printf("urlIncluedInQrcode: %s\n", urlIncluedInQrcode)
 }
 
-func createTempQrInt(accessToken string, sceneId interface{}, expireTime int) {
-	showResult(wxtools.CreateTempQrIntScene(accessToken, sceneId.(int), expireTime))
+func createTempQrInt(sceneId interface{}, expireTime int) {
+	showResult(wxtools.CreateTempQrIntScene(service, sceneId.(int), expireTime))
 }
 
-func createTempQrStr(accessToken string, sceneId interface{}, expireTime int) {
-	showResult(wxtools.CreateTempQrStrScene(accessToken, sceneId.(string), expireTime))
+func createTempQrStr(sceneId interface{}, expireTime int) {
+	showResult(wxtools.CreateTempQrStrScene(service, sceneId.(string), expireTime))
 }
 
-func createQrInt(accessToken string, sceneId interface{}, expireTime int) {
-	showResult(wxtools.CreateQrIntScene(accessToken, sceneId.(int)))
+func createQrInt(sceneId interface{}, expireTime int) {
+	showResult(wxtools.CreateQrIntScene(service, sceneId.(int)))
 }
 
-func createQrStr(accessToken string, sceneId interface{}, expireTime int) {
-	showResult(wxtools.CreateQrStrScene(accessToken, sceneId.(string)))
+func createQrStr(sceneId interface{}, expireTime int) {
+	showResult(wxtools.CreateQrStrScene(service, sceneId.(string)))
 }
 
-func loadConf(paramsFile string) (*ParamsT, string, error) {
-	paramsContent, err := ioutil.ReadFile(paramsFile)
+func loadConf(paramsFile string) (error) {
+	fp, err := os.Open(paramsFile)
 	if err != nil {
-		return nil, "", err
+		return err
 	}
+	defer fp.Close()
 
 	var params ParamsT
-	if err = json.Unmarshal(paramsContent, &params); err != nil {
-		return nil, "", err
+	if err = json.NewDecoder(fp).Decode(&params); err != nil {
+		return err
 	}
 
-	wxconf.SetParams(params.Token, params.AppId, params.Secret, "")
-	wxconf.TokenStorePath = params.TokenCache
+	wxapi.SetWxParams(service, params.Token, params.AppId, params.Secret, "")
+	wxapi.InitWx(params.TokenCache)
 
-	accessToken, err := wxauth.NewAccessToken().Get()
-	if err != nil {
-		return nil, "", err
-	}
-	return &params, accessToken, nil
+	return nil
 }
 
 const (
@@ -71,7 +70,7 @@ const (
 	FOREVER_STR = "forever-str"
 )
 
-var _commands = map[string]func(string, interface{}, int) {
+var _commands = map[string]func(interface{}, int) {
 	TEMP_INT:    createTempQrInt,
 	TEMP_STR:    createTempQrStr,
 	FOREVER_INT: createQrInt,
@@ -140,12 +139,11 @@ func main() {
 		}
 	}
 
-	_, accessToken, err := loadConf(paramsFile)
-	if err != nil {
+	if err := loadConf(paramsFile); err != nil {
 		fmt.Printf("failed to load conf: %v\n", err)
 		return
 	}
 
 	fn, _ := _commands[command]
-	fn(accessToken, iSceneId, expireTime)
+	fn(iSceneId, expireTime)
 }
